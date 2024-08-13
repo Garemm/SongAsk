@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gimme The Song</title>
+        <link rel="stylesheet" href="/styles/main.css">
+    </head>
+    <body>
+    <h1 class="head">Gimme The Song</h1>
+    <div>
+        <form action="/submit" method="post">
+            <a class="title">Enter a keyword for the song you're looking for: </a>
+            <input type="text" name="cancion" placeholder="Title,lyrics,album etc." >
+            <input class="submit" type="submit" value="submit">
+            <h3 class="title">These are some results of music related with it:</h3>
+            <br>
+            <div class="all">
+            <% if(locals.data){%>
+                <%if(data.resultCount>=1){%>
+                    <% const limit=data.resultCount-1;%>
+                        <%for(i=0; i<=limit; i++){%>
+                            <div class="disco">
+                            <% if(data.results[i].trackName.length >= 24){ %>
+                            <h2 name="Canción"><%= data.results[i].trackName.slice(0,24)%>...
+                            </h2>
+                            <%}else{%>
+                                <h2 name="Canción"><%= data.results[i].trackName %>
+                                </h2>
+                            <% } %>
+                            <p name="album">Album: <%= data.results[i].collectionName %>
+                            </p>
+                            <p name="artista">Artis: <%= data.results[i].artistName %>
+                            </p>
+                            <p name="numero de track">Track number: <%= data.results[i].trackNumber %>
+                            </p>       
+                            <p name="releaseDate">Release date: <%= data.results[i].releaseDate %>
+                            </p>
+                            <div class="link">                            
+                           <button class="button" onclick="location.href='<%= data.results[i].trackViewUrl %>'" type="button">Listen to song</button>
+                            </div>
+                            </div>
+                           
+                            <%}%>
+                         <%}else{%>
+                                    <h2>No results for "<%= cancion %>"</h2>
+                            <%}%>
+                            <%}%>
+                </div>
+                            <% if(locals.error){%>
+                                                <div>
+                                                    <%= error%>
+                                                </div>
+                                                <%}%>
+        </form>     
+    </div>
+    </body>
+    <footer>
+        <a href="https://jonathangarcia.netlify.app/" style="color: rgb(18, 18, 205);">Portfolio</a>
+        <br>
+        <br>
+        <a href="https://github.com/Garemm"><img src="../img/github.png" alt="github" ></a>
+    </footer>
+</html>
